@@ -1,4 +1,3 @@
-import 'package:flutter_news/features/daily_new/domain/entities/new_entity.dart';
 import 'package:flutter_news/features/daily_new/domain/repository/new_repo.dart';
 
 class DeleteNewsUsecase {
@@ -7,7 +6,7 @@ class DeleteNewsUsecase {
   DeleteNewsUsecase(this._newRepository);
 
   @override
-  Future<void> execute({NewEntity? params}) {
-    return _newRepository.removeNews(params!);
+  Future<void> execute() {
+    return _newRepository.removeNews();
   }
 }

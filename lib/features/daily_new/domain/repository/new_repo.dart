@@ -9,5 +9,5 @@ abstract class NewRepository {
 
   Future<void> saveNews(NewEntity newEntity);
 
-  Future<void> removeNews(NewEntity newEntity);
+  Future<void> removeNews();
 }
