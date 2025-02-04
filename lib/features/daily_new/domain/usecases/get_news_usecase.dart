@@ -6,8 +6,7 @@ class GetNewsUseCase {
 
   GetNewsUseCase(this._newRepository);
 
-  @override
-  Future<List<NewEntity>> execute({void params}) {
+  Future<List<NewsEntity>> execute({void params}) {
     return _newRepository.getNew();
   }
 }

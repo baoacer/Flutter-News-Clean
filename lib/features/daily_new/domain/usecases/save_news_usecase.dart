@@ -6,8 +6,7 @@ class SaveNewsUsecase {
 
   SaveNewsUsecase(this._newRepository);
 
-  @override
-  Future<void> execute({NewEntity? params}) {
-    return _newRepository.saveNews(params!);
+  Future<void> execute(NewsEntity news) {
+    return _newRepository.saveNews(news);
   }
 }

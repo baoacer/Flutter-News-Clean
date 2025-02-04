@@ -5,27 +5,27 @@ import 'package:flutter_news/features/daily_new/domain/repository/new_repo.dart'
 
 class NewRepositoryImpl implements NewRepository {
   final NewsApiService _newsApiService;
-  final DatabaseHelper _databaseHelper = DatabaseHelper();
+  final DatabaseHelper _databaseHelper;
 
-  NewRepositoryImpl(this._newsApiService);
+  NewRepositoryImpl(this._newsApiService, this._databaseHelper);
 
   @override
-  Future<List<NewEntity>> getNew() {
+  Future<List<NewsEntity>> getNew() {
     return _newsApiService.fetchNews();
   }
 
   @override
-  Future<List<NewEntity>> getSaveNews() {
+  Future<List<NewsEntity>> getSaveNews() {
     return _databaseHelper.getNews();
   }
 
   @override
-  Future<void> removeNews() {
-    return _databaseHelper.deleteNews();
+  Future<void> removeNews(int newsId) {
+    return _databaseHelper.deleteNews(newsId);
   }
 
   @override
-  Future<void> saveNews(NewEntity news) {
+  Future<void> saveNews(NewsEntity news) {
     return _databaseHelper.insertNews(news);
   }
 }

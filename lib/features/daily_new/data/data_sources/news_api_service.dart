@@ -7,13 +7,13 @@ class NewsApiService {
   final String apiUrl =
       "$newApiBaseURL/top-headlines?country=$countryQuery&category=$categoryQuery&apiKey=$apiKey";
 
-  Future<List<NewEntity>> fetchNews() async {
+  Future<List<NewsEntity>> fetchNews() async {
     final response = await http.get(Uri.parse(apiUrl));
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       return (data['articles'] as List)
-          .map((article) => NewEntity(
+          .map((article) => NewsEntity(
                 author: article['author'] ?? "",
                 title: article['title'],
                 description: article['description'] ?? "",

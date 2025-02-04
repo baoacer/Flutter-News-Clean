@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_news/features/daily_new/domain/entities/new_entity.dart';
 
 class NewWidget extends StatelessWidget {
-  final NewEntity? newEntity;
+  final NewsEntity? newEntity;
 
   const NewWidget({super.key, this.newEntity});
 

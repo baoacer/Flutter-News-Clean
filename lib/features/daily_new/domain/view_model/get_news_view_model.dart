@@ -5,8 +5,8 @@ import 'package:flutter_news/features/daily_new/domain/usecases/get_news_usecase
 class NewsViewModel extends ChangeNotifier {
   final GetNewsUseCase getNewsUseCase;
 
-  List<NewEntity> _news = [];
-  List<NewEntity> get news => _news;
+  List<NewsEntity> _news = [];
+  List<NewsEntity> get news => _news;
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;

@@ -1,15 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_news/features/daily_new/domain/entities/new_entity.dart';
+import 'package:flutter_news/features/daily_new/domain/view_model/local_news_view_model.dart';
+import 'package:provider/provider.dart';
 
 class NewsDetailPage extends StatelessWidget {
-  final NewEntity news;
+  final NewsEntity news;
 
   const NewsDetailPage({Key? key, required this.news}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = context.watch<LocalNewsViewModel>();
+
     return Scaffold(
-      appBar: AppBar(title: Text(news.title ?? 'News Detail')),
+      appBar: AppBar(
+        title: Text(news.title ?? 'News Detail'),
+        actions: [
+          IconButton(
+              icon: Icon(Icons.bookmark),
+              onPressed: () => viewModel.addToBookmark(news)),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -38,7 +49,7 @@ class NewsDetailPage extends StatelessWidget {
                 softWrap: true, // Cho phép wrap nội dung
                 overflow:
                     TextOverflow.visible, // Đảm bảo nội dung không bị cắt bớt
-              ),
+              )
             ],
           ),
         ),

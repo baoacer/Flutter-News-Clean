@@ -1,4 +1,4 @@
-class NewEntity {
+class NewsEntity {
   int? id;
   String? author;
   String? title;
@@ -8,7 +8,7 @@ class NewEntity {
   String? publishedAt;
   String? content;
 
-  NewEntity({
+  NewsEntity({
     this.id,
     this.author,
     this.title,
@@ -32,8 +32,8 @@ class NewEntity {
     };
   }
 
-  factory NewEntity.fromMap(Map<String, dynamic> map) {
-    return NewEntity(
+  factory NewsEntity.fromMap(Map<String, dynamic> map) {
+    return NewsEntity(
       id: map['id'],
       author: map['author'],
       title: map['title'],

@@ -3,11 +3,11 @@ import '../entities/new_entity.dart';
 abstract class NewRepository {
   /// Future : Bat dong bo
   /// DataState : Trang thai cua data -> success || error
-  Future<List<NewEntity>> getNew();
+  Future<List<NewsEntity>> getNew();
 
-  Future<List<NewEntity>> getSaveNews();
+  Future<List<NewsEntity>> getSaveNews();
 
-  Future<void> saveNews(NewEntity newEntity);
+  Future<void> saveNews(NewsEntity newEntity);
 
-  Future<void> removeNews();
+  Future<void> removeNews(int newId);
 }

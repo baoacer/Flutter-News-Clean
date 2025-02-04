@@ -5,8 +5,7 @@ class DeleteNewsUsecase {
 
   DeleteNewsUsecase(this._newRepository);
 
-  @override
-  Future<void> execute() {
-    return _newRepository.removeNews();
+  Future<void> execute(int newsId) {
+    return _newRepository.removeNews(newsId);
   }
 }

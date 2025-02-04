@@ -28,7 +28,7 @@ class DatabaseHelper implements NewDao {
       onCreate: (db, version) {
         db.execute('''
           CREATE TABLE news (
-            id TEXT PRIMARY KEY,
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             author TEXT,
             title TEXT,
             description TEXT,
@@ -42,26 +42,28 @@ class DatabaseHelper implements NewDao {
     );
   }
 
-  Future<int> insertNews(NewEntity news) async {
+  @override
+  Future<int> insertNews(NewsEntity news) async {
     final db = await database;
     return await db.insert(
       'news',
       news.toMap(),
-      // if the same news is inserted, replace it
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
 
   @override
-  Future<List<NewEntity>> getNews() async {
+  Future<List<NewsEntity>> getNews() async {
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query('news');
-    return List.generate(maps.length, (i) => NewEntity.fromMap(maps[i]));
+    return List.generate(maps.length, (i) => NewsEntity.fromMap(maps[i]));
   }
 
   @override
-  Future<int> deleteNews() async {
+  Future<void> deleteNews(int newsId) async {
     final db = await database;
-    return await db.delete('news');
+    if (newsId != -1) {
+      await db.delete('news', where: 'id = ?', whereArgs: [newsId]);
+    }
   }
 }
