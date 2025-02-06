@@ -3,15 +3,15 @@ import 'package:flutter_news/features/daily_new/data/data_sources/news_api_servi
 import 'package:flutter_news/features/daily_new/domain/entities/new_entity.dart';
 import 'package:flutter_news/features/daily_new/domain/repository/new_repo.dart';
 
-class NewRepositoryImpl implements NewRepository {
+class NewsRepositoryImpl implements NewsRepository {
   final NewsApiService _newsApiService;
   final DatabaseHelper _databaseHelper;
 
-  NewRepositoryImpl(this._newsApiService, this._databaseHelper);
+  NewsRepositoryImpl(this._newsApiService, this._databaseHelper);
 
   @override
-  Future<List<NewsEntity>> getNew() {
-    return _newsApiService.fetchNews();
+  Future<List<NewsEntity>> getNews(String keyword) {
+    return _newsApiService.fetchNews(keyword);
   }
 
   @override
@@ -20,8 +20,8 @@ class NewRepositoryImpl implements NewRepository {
   }
 
   @override
-  Future<void> removeNews(int newsId) {
-    return _databaseHelper.deleteNews(newsId);
+  Future<void> removeNews(NewsEntity news) {
+    return _databaseHelper.deleteNews(news);
   }
 
   @override

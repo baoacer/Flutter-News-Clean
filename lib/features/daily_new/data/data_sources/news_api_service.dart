@@ -4,10 +4,15 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class NewsApiService {
-  final String apiUrl =
-      "$newApiBaseURL/top-headlines?country=$countryQuery&category=$categoryQuery&apiKey=$apiKey";
+  String apiUrl = '';
 
-  Future<List<NewsEntity>> fetchNews() async {
+  Future<List<NewsEntity>> fetchNews(String keyword) async {
+    if (keyword.isNotEmpty && keyword != " ") {
+      apiUrl = "$newApiBaseURL/everything?q=$keyword&apiKey=$apiKey";
+    } else {
+      apiUrl =
+          "$newApiBaseURL/top-headlines?country=$countryQuery&category=$categoryQuery&apiKey=$apiKey";
+    }
     final response = await http.get(Uri.parse(apiUrl));
 
     if (response.statusCode == 200) {

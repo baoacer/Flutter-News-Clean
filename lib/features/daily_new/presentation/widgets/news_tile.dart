@@ -37,7 +37,7 @@ class NewWidget extends StatelessWidget {
             color: Colors.black.withOpacity(0.08),
           ),
           child: Image.network(
-            newEntity?.urlToImage ?? '', // URL hình ảnh
+            (newEntity?.urlToImage)?.trim() ?? '', // URL hình ảnh
             fit: BoxFit.cover,
             loadingBuilder: (context, child, loadingProgress) {
               if (loadingProgress == null) return child;

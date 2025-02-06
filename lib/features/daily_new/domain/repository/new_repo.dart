@@ -1,13 +1,13 @@
 import '../entities/new_entity.dart';
 
-abstract class NewRepository {
+abstract class NewsRepository {
   /// Future : Bat dong bo
   /// DataState : Trang thai cua data -> success || error
-  Future<List<NewsEntity>> getNew();
+  Future<List<NewsEntity>> getNews(String keyword);
 
   Future<List<NewsEntity>> getSaveNews();
 
-  Future<void> saveNews(NewsEntity newEntity);
+  Future<void> saveNews(NewsEntity news);
 
-  Future<void> removeNews(int newId);
+  Future<void> removeNews(NewsEntity news);
 }

@@ -5,9 +5,9 @@ import 'package:flutter_news/features/daily_new/domain/usecases/get_save_news_us
 import 'package:flutter_news/features/daily_new/domain/usecases/save_news_usecase.dart';
 
 class LocalNewsViewModel extends ChangeNotifier {
-  final SaveNewsUsecase saveNewsUsecase;
-  final GetSaveNewsUsecase getSaveNewsUsecase;
-  final DeleteNewsUsecase deleteNewsUsecase;
+  final SaveNewsUseCase saveNewsUsecase;
+  final GetSaveNewsUseCase getSaveNewsUsecase;
+  final DeleteNewsUseCase deleteNewsUsecase;
 
   LocalNewsViewModel(
       this.saveNewsUsecase, this.getSaveNewsUsecase, this.deleteNewsUsecase);
@@ -19,8 +19,8 @@ class LocalNewsViewModel extends ChangeNotifier {
     await loadBookmark();
   }
 
-  Future<void> removeFromBookmark(int newsId) async {
-    await deleteNewsUsecase.execute(newsId);
+  Future<void> removeFromBookmark(NewsEntity news) async {
+    await deleteNewsUsecase.execute(news);
     await loadBookmark();
   }
 

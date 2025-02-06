@@ -60,10 +60,8 @@ class DatabaseHelper implements NewDao {
   }
 
   @override
-  Future<void> deleteNews(int newsId) async {
+  Future<void> deleteNews(NewsEntity news) async {
     final db = await database;
-    if (newsId != -1) {
-      await db.delete('news', where: 'id = ?', whereArgs: [newsId]);
-    }
+    await db.delete('news', where: 'title = ?', whereArgs: [news.title]);
   }
 }

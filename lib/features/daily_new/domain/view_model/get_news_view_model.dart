@@ -13,12 +13,12 @@ class NewsViewModel extends ChangeNotifier {
 
   NewsViewModel(this.getNewsUseCase);
 
-  Future<void> fetchNews() async {
+  Future<void> fetchNews(String keyword) async {
     _isLoading = true;
     notifyListeners();
 
     try {
-      _news = await getNewsUseCase.execute();
+      _news = await getNewsUseCase.execute(keyword);
     } catch (e) {
       print("Error: $e");
     } finally {

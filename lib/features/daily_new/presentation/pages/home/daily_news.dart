@@ -1,51 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_news/features/daily_new/domain/view_model/get_news_view_model.dart';
-import 'package:flutter_news/features/daily_new/presentation/pages/favorite_news_page.dart';
+import 'package:flutter_news/features/daily_new/presentation/pages/bookmark_news_page.dart';
 import 'package:flutter_news/features/daily_new/presentation/pages/news_details/news_details.dart';
 import 'package:flutter_news/features/daily_new/presentation/widgets/news_tile.dart';
 import 'package:provider/provider.dart';
 
-class DailyNews extends StatelessWidget {
+class DailyNews extends StatefulWidget {
   const DailyNews({super.key});
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   final viewModel = context.watch<NewsViewModel>();
+  @override
+  _DailyNewsState createState() => _DailyNewsState();
+}
 
-  //   return Scaffold(
-  //     appBar: _buildAppbar(),
-  //     body: viewModel.isLoading
-  //         ? Center(child: CircularProgressIndicator())
-  //         : ListView.builder(
-  //             itemBuilder: (context, index) {
-  //               return NewWidget(
-  //                 newEntity: viewModel.news[index],
-  //               );
-  //             },
-  //             itemCount: viewModel.news.length,
-  //           ),
-  //     floatingActionButton: FloatingActionButton(
-  //       onPressed: () => viewModel.fetchNews(),
-  //       child: Icon(Icons.refresh),
-  //     ),
-  //   );
-  // }
+class _DailyNewsState extends State<DailyNews> {
+  String searchQuery = "";
 
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<NewsViewModel>();
 
+    // Lọc danh sách tin tức dựa trên từ khóa tìm kiếm
+    final filteredNews = viewModel.news
+        .where((news) =>
+            news.title?.toLowerCase().contains(searchQuery.toLowerCase()) ??
+            false)
+        .toList();
+
     return Scaffold(
       appBar: _buildAppbar(context),
       body: viewModel.isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : ListView.builder(
+              itemCount: filteredNews.length,
               itemBuilder: (context, index) {
-                final news = viewModel.news[index]; // Lấy tin tức hiện tại
+                final news = filteredNews[index];
 
                 return GestureDetector(
                   onTap: () {
-                    // Chuyển hướng tới trang chi tiết bài báo
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -53,21 +44,18 @@ class DailyNews extends StatelessWidget {
                       ),
                     );
                   },
-                  child: NewWidget(
-                    newEntity: news,
-                  ),
+                  child: NewWidget(newEntity: news),
                 );
               },
-              itemCount: viewModel.news.length,
             ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => viewModel.fetchNews(),
-        child: Icon(Icons.refresh),
+        onPressed: () => viewModel.fetchNews(""),
+        child: const Icon(Icons.refresh),
       ),
     );
   }
 
-  _buildAppbar(BuildContext context) {
+  AppBar _buildAppbar(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.deepPurple[200],
       centerTitle: true,
@@ -76,14 +64,99 @@ class DailyNews extends StatelessWidget {
         style: TextStyle(color: Colors.black),
       ),
       actions: [
+        // Search
+        IconButton(
+          icon: const Icon(Icons.search),
+          onPressed: () {
+            _showSearchDialog(context);
+          },
+        ),
+        // Filter
+        IconButton(
+          icon: const Icon(Icons.filter_list),
+          onPressed: () {
+            _showFilterDialog(context);
+          },
+        ),
+        // Bookmark
         IconButton(
           icon: const Icon(Icons.bookmark),
-          onPressed: () => Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => FavoriteNewsPage()),
-          ),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => BookmarkNewsPage()),
+            );
+          },
         ),
       ],
+    );
+  }
+
+  // Hộp thoại tìm kiếm API
+  void _showSearchDialog(BuildContext context) {
+    String searchQuery = "";
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Search News"),
+          content: TextField(
+            decoration:
+                const InputDecoration(hintText: "Enter search keywords..."),
+            onChanged: (value) {
+              searchQuery = value; // Cập nhật giá trị tìm kiếm
+            },
+          ),
+          actions: [
+            TextButton(
+              onPressed: () async {
+                Navigator.pop(context);
+                if (searchQuery.isNotEmpty) {
+                  final viewModel = context.read<NewsViewModel>();
+                  await viewModel.fetchNews(searchQuery); // Gọi API với query
+                }
+              },
+              child: const Text("Search"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text("Close"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  // Hiển thị hộp thoại lọc
+  void _showFilterDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Search News"),
+          content: TextField(
+            autofocus: true,
+            decoration: const InputDecoration(hintText: "Enter keywords..."),
+            onChanged: (value) {
+              setState(() {
+                searchQuery = value;
+              });
+            },
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Đóng hộp thoại
+              },
+              child: const Text("Close"),
+            ),
+          ],
+        );
+      },
     );
   }
 }
