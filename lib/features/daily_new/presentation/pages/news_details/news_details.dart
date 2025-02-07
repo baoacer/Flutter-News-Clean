@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_news/features/daily_new/domain/entities/new_entity.dart';
+import 'package:flutter_news/features/daily_new/domain/entities/news_entity.dart';
 import 'package:flutter_news/features/daily_new/domain/view_model/get_local_news_view_model.dart';
 import 'package:flutter_news/features/daily_new/domain/view_model/get_news_detail_view_model.dart';
 import 'package:provider/provider.dart';

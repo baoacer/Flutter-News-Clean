@@ -1,5 +1,5 @@
 import 'package:flutter_news/features/daily_new/data/data_sources/DAO/new_dao.dart';
-import 'package:flutter_news/features/daily_new/domain/entities/new_entity.dart';
+import 'package:flutter_news/features/daily_new/domain/entities/news_entity.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 

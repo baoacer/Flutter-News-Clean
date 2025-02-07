@@ -1,5 +1,5 @@
-import '../entities/new_entity.dart';
-import '../repository/new_repo.dart';
+import '../entities/news_entity.dart';
+import '../repository/news_repo.dart';
 
 class SaveNewsUseCase {
   final NewsRepository _newRepository;

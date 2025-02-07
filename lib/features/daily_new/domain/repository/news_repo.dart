@@ -1,4 +1,4 @@
-import '../entities/new_entity.dart';
+import '../entities/news_entity.dart';
 
 abstract class NewsRepository {
   /// Future : Bat dong bo

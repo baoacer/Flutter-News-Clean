@@ -1,4 +1,4 @@
-import 'package:flutter_news/features/daily_new/domain/entities/new_entity.dart';
+import 'package:flutter_news/features/daily_new/domain/entities/news_entity.dart';
 
 abstract class NewDao {
   Future<List<NewsEntity>> getNews();

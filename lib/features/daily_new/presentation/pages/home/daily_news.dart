@@ -44,7 +44,7 @@ class _DailyNewsState extends State<DailyNews> {
                       ),
                     );
                   },
-                  child: NewWidget(newEntity: news),
+                  child: NewsWidget(news),
                 );
               },
             ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_news/features/daily_new/domain/entities/new_entity.dart';
+import 'package:flutter_news/features/daily_new/domain/entities/news_entity.dart';
 import 'package:flutter_news/features/daily_new/domain/usecases/get_news_usecase.dart';
 
 class NewsViewModel extends ChangeNotifier {

@@ -1,5 +1,5 @@
 import 'package:flutter_news/core/constants/constants.dart';
-import 'package:flutter_news/features/daily_new/domain/entities/new_entity.dart';
+import 'package:flutter_news/features/daily_new/domain/entities/news_entity.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
