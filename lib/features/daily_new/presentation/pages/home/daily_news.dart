@@ -17,7 +17,7 @@ class _DailyNewsState extends State<DailyNews> {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = context.watch<NewsViewModel>();
+    final viewModel = context.watch<FetchNewsViewModel>();
 
     // Lọc danh sách tin tức dựa trên từ khóa tìm kiếm
     final filteredNews = viewModel.news
@@ -113,7 +113,7 @@ class _DailyNewsState extends State<DailyNews> {
               onPressed: () async {
                 Navigator.pop(context);
                 if (searchQuery.isNotEmpty) {
-                  final viewModel = context.read<NewsViewModel>();
+                  final viewModel = context.read<FetchNewsViewModel>();
                   await viewModel.fetchNews(searchQuery); // Gọi API với query
                 }
               },

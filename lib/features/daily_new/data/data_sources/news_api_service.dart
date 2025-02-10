@@ -1,19 +1,12 @@
-import 'package:flutter_news/core/constants/constants.dart';
 import 'package:flutter_news/features/daily_new/domain/entities/news_entity.dart';
+import 'package:flutter_news/features/daily_new/domain/repository/fetch_news_repo.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-class NewsApiService {
-  String apiUrl = '';
-
-  Future<List<NewsEntity>> fetchNews(String keyword) async {
-    if (keyword.isNotEmpty && keyword != " ") {
-      apiUrl = "$newApiBaseURL/everything?q=$keyword&apiKey=$apiKey";
-    } else {
-      apiUrl =
-          "$newApiBaseURL/top-headlines?country=$countryQuery&category=$categoryQuery&apiKey=$apiKey";
-    }
-    final response = await http.get(Uri.parse(apiUrl));
+class NewsApiService implements FetchNewsRepo {
+  @override
+  Future<List<NewsEntity>> fetchNews(String url) async {
+    final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_news/features/daily_new/domain/entities/news_entity.dart';
-import 'package:flutter_news/features/daily_new/domain/usecases/get_news_usecase.dart';
+import 'package:flutter_news/features/daily_new/domain/usecases/fetch_news_usecase.dart';
 
-class NewsViewModel extends ChangeNotifier {
-  final GetNewsUseCase getNewsUseCase;
+class FetchNewsViewModel extends ChangeNotifier {
+  final FetchNewsUseCase getNewsUseCase;
 
   List<NewsEntity> _news = [];
   List<NewsEntity> get news => _news;
@@ -11,7 +11,7 @@ class NewsViewModel extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  NewsViewModel(this.getNewsUseCase);
+  FetchNewsViewModel(this.getNewsUseCase);
 
   Future<void> fetchNews(String keyword) async {
     _isLoading = true;

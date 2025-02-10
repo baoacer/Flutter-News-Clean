@@ -3,14 +3,14 @@ import 'package:flutter_news/features/daily_new/data/data_sources/news_api_servi
 import 'package:flutter_news/features/daily_new/domain/entities/news_entity.dart';
 import 'package:flutter_news/features/daily_new/domain/repository/news_repo.dart';
 
-class NewsRepositoryImpl implements NewsRepository {
+class NewsRepositoryImpl extends NewsRepository {
   final NewsApiService _newsApiService;
   final DatabaseHelper _databaseHelper;
 
   NewsRepositoryImpl(this._newsApiService, this._databaseHelper);
 
   @override
-  Future<List<NewsEntity>> getNews(String keyword) {
+  Future<List<NewsEntity>> fetchNews(String keyword) {
     return _newsApiService.fetchNews(keyword);
   }
 

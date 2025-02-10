@@ -2,9 +2,10 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_news/features/daily_new/data/data_sources/app_database.dart';
 import 'package:flutter_news/features/daily_new/data/data_sources/news_api_service.dart';
+import 'package:flutter_news/features/daily_new/data/repository/fetch_news_repo_impl.dart';
 import 'package:flutter_news/features/daily_new/data/repository/new_repo_impl.dart';
 import 'package:flutter_news/features/daily_new/domain/usecases/delete_news_usecase.dart';
-import 'package:flutter_news/features/daily_new/domain/usecases/get_news_usecase.dart';
+import 'package:flutter_news/features/daily_new/domain/usecases/fetch_news_usecase.dart';
 import 'package:flutter_news/features/daily_new/domain/usecases/get_save_news_usecase.dart';
 import 'package:flutter_news/features/daily_new/domain/usecases/open_url_usecase.dart';
 import 'package:flutter_news/features/daily_new/domain/usecases/save_news_usecase.dart';
@@ -23,13 +24,16 @@ void main() {
   // Cấu hình databaseFactory phù hợp với nền tảng (Web hoặc không phải Web)
   databaseFactory = kIsWeb ? databaseFactoryFfiWeb : databaseFactoryFfi;
 
+  // repo
+  final newsApiService = NewsApiService();
+  final fetchNewsRepo = FetchNewsRepoImpl(newsApiService);
+
   // Khởi tạo các dependency
   final appDatabase = DatabaseHelper();
-  final newsApiService = NewsApiService();
   final repository = NewsRepositoryImpl(newsApiService, appDatabase);
 
   // Khởi tạo các use case
-  final getNewsUseCase = GetNewsUseCase(repository);
+  final fetchNewsUseCase = FetchNewsUseCase(fetchNewsRepo);
   final saveNewsUseCase = SaveNewsUseCase(repository);
   final getSaveNewsUseCase = GetSaveNewsUseCase(repository);
   final deleteNewsUseCase = DeleteNewsUseCase(repository);
@@ -37,7 +41,7 @@ void main() {
 
   // Khởi chạy ứng dụng với các dependency đã được truyền vào
   runApp(MyApp(
-    getNewsUseCase: getNewsUseCase,
+    fetchNewsUseCase: fetchNewsUseCase,
     saveNewsUseCase: saveNewsUseCase,
     getSaveNewsUseCase: getSaveNewsUseCase,
     deleteNewsUseCase: deleteNewsUseCase,
@@ -46,14 +50,14 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  final GetNewsUseCase getNewsUseCase;
+  final FetchNewsUseCase fetchNewsUseCase;
   final SaveNewsUseCase saveNewsUseCase;
   final GetSaveNewsUseCase getSaveNewsUseCase;
   final DeleteNewsUseCase deleteNewsUseCase;
   final OpenUrlUseCase openUrlUseCase;
 
   const MyApp({
-    required this.getNewsUseCase,
+    required this.fetchNewsUseCase,
     required this.saveNewsUseCase,
     required this.getSaveNewsUseCase,
     required this.deleteNewsUseCase,
@@ -66,7 +70,7 @@ class MyApp extends StatelessWidget {
       providers: [
         // Cung cấp NewsViewModel cho việc lấy tin tức
         ChangeNotifierProvider(
-          create: (_) => NewsViewModel(getNewsUseCase),
+          create: (_) => FetchNewsViewModel(fetchNewsUseCase),
         ),
         // Cung cấp LocalNewsViewModel cho các thao tác lưu, lấy và xóa tin tức
         ChangeNotifierProvider(
